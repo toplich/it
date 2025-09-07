@@ -1,0 +1,30 @@
+# Hugo build output
+/public/
+/resources/_gen/
+
+# Hugo caches
+/.hugo_build.lock
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node modules (якщо використовуєш npm/yarn для CSS/JS)
+node_modules/
+
+# VSCode / JetBrains IDE settings
+.vscode/
+.idea/
+
+# Backup/temporary files
+*.swp
+*.bak
+*.tmp
+*~
+
+# Env files (API keys, secrets)
+.env
+

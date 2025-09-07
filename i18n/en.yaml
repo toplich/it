@@ -1,0 +1,13 @@
+- id: form_name
+  translation: "First and Last Name"
+- id: form_phone
+  translation: "Phone"
+- id: form_email
+  translation: "Email"
+- id: form_message
+  translation: "Message"
+- id: form_file
+  translation: "Upload Photo"
+- id: form_submit
+  translation: "Submit"
+
