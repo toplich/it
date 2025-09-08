@@ -8,7 +8,7 @@ header_menu_title: "Über mich"
 navigation_menu_title: "Über mich"
 ---
 
-![Vitalii Stepchuk](/images/about.jpg)
+![Vitalii Stepchuk](/images/about.webp)
 
 ### Vitalii Stepchuk  
 **IT-Systemingenieur & Cloud-Spezialist**
