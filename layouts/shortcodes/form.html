@@ -1,110 +1,42 @@
-<form class="contact-form" id="contactForm">
-  <div class="input-group">
-    <i class="fa-solid fa-user"></i>
-    <input type="text" id="name" name="name" placeholder="{{ i18n "form_name" }}" required>
-  </div>
+<div class="card shadow-sm p-4 mb-4">
+  <form data-form="kontakt">
+    <input type="hidden" name="formType" value="kontakt">
 
-  <div class="input-group">
-    <i class="fa-solid fa-phone"></i>
-    <input type="tel" id="phone" name="phone" placeholder="{{ i18n "form_phone" }}">
-  </div>
+    <div class="mb-3">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input type="text" name="name" class="form-control" placeholder="Vor- und Nachname" required>
+      </div>
+    </div>
 
-  <div class="input-group">
-    <i class="fa-solid fa-envelope"></i>
-    <input type="email" id="email" name="email" placeholder="{{ i18n "form_email" }}" required>
-  </div>
+    <div class="mb-3">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        <input type="email" name="email" class="form-control" placeholder="beispiel@domain.ch" required>
+      </div>
+    </div>
 
-  <div class="input-group textarea-group">
-    <i class="fa-solid fa-message"></i>
-    <textarea id="message" name="message" rows="5" placeholder="{{ i18n "form_message" }}" required></textarea>
-  </div>
+    <div class="mb-3">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+        <input type="tel" name="phone" class="form-control" placeholder="+41 79 123 45 67">
+      </div>
+    </div>
 
-  <button type="submit">
-    <i class="fa-solid fa-paper-plane"></i> {{ i18n "form_submit" }}
-  </button>
-</form>
+    <div class="mb-3">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-comment"></i></span>
+        <textarea name="message" rows="4" class="form-control" placeholder="Ihre Nachricht..." required></textarea>
+      </div>
+    </div>
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i> Absenden
+      </button>
+    </div>
 
-<style>
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 600px;
-}
-.input-group {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.input-group i {
-  position: absolute;
-  left: 12px;
-  color: #555;
-  font-size: 1rem;
-}
-.input-group input,
-.input-group textarea {
-  width: 100%;
-  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-.textarea-group i {
-  top: 12px;
-  align-self: flex-start;
-}
-.contact-form button {
-  background-color: #007acc;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.contact-form button:hover {
-  background-color: #005fa3;
-}
-</style>
-
-<script>
-document.getElementById("contactForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-
-  const data = {
-    formType: "kontakt", // 👈 важливо: це піде у subject у воркері
-    name: document.getElementById("name").value,
-    phone: document.getElementById("phone").value,
-    email: document.getElementById("email").value,
-    message: document.getElementById("message").value,
-  };
-
-  try {
-    const resp = await fetch("/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    const text = await resp.text();
-
-    if (resp.ok) {
-      alert("✅ Nachricht gesendet!\n\n" + text);
-      e.target.reset();
-    } else {
-      alert("❌ Fehler beim Senden!\n\n" + text);
-    }
-  } catch (err) {
-    alert("❌ Netzwerkfehler: " + err.message);
-  }
-});
-</script>
-
+    <div class="form-feedback mt-3" style="display:none;"></div>
+  </form>
+</div>
+<script src="/js/form.js"></script>
