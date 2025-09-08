@@ -1,15 +1,8 @@
-<form class="contact-form" method="post" enctype="multipart/form-data">
-
+<form class="contact-form" id="contactForm">
   <input type="text" id="name" name="name" placeholder="{{ i18n "form_name" }}" required>
-
   <input type="tel" id="phone" name="phone" placeholder="{{ i18n "form_phone" }}">
-
   <input type="email" id="email" name="email" placeholder="{{ i18n "form_email" }}" required>
-
   <textarea id="message" name="message" rows="5" placeholder="{{ i18n "form_message" }}" required></textarea>
-
-  <input type="file" id="file" name="file" accept="image/*">
-
   <button type="submit">{{ i18n "form_submit" }}</button>
 </form>
 
@@ -26,10 +19,6 @@
   border-radius: 6px;
   font-size: 1rem;
 }
-.contact-form input[type="file"] {
-  border: none;
-  padding: 0;
-}
 .contact-form button {
   background-color: #007acc;
   color: white;
@@ -43,4 +32,33 @@
   background-color: #005fa3;
 }
 </style>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const data = {
+    formType: "kontakt", // можна міняти для різних форм
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value,
+  };
+
+  try {
+    const resp = await fetch("/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const text = await resp.text();
+    alert("✅ Nachricht gesendet!\n\n" + text);
+    e.target.reset();
+
+  } catch (err) {
+    alert("❌ Fehler beim Senden: " + err.message);
+  }
+});
+</script>
 
