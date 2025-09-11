@@ -10,12 +10,15 @@
 {{ end }}
 
 {{ with resources.Get .Site.Params.favicon }}
-  <link rel="shortcut icon" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" />{{ end }}
+  <link rel="shortcut icon" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" />
+{{ end }}
 
 {{ with or .Description .Site.Params.description | plainify }}
-  <meta name="description" content="{{ . }}" />{{ end }}
+  <meta name="description" content="{{ . }}" />
+{{ end }}
 {{ with or (delimit .Keywords ", ") .Site.Params.meta.keywords }}
-  <meta name="keywords" content="{{ . }}" />{{ end }}
+  <meta name="keywords" content="{{ . }}" />
+{{ end }}
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
 <meta name="HandheldFriendly" content="True" />
@@ -26,10 +29,10 @@
 {{ $stylesheetNormalize := resources.Get "css/normalize.css" }}
 {{ $stylesheetGeneric   := resources.Get "css/generic.css" }}
 {{ $stylesheetScreen    := ( resources.Get "css/_index.scss" | css.Sass ) }}
-{{ $stylesheetCustom    := resources.Get "css/custom.css" }}
+{{ $theme               := printf "css/themes/%s.scss" .Site.Params.theme | resources.Get | css.Sass | resources.Minify }}
+{{ $stylesheetCustom    := resources.Get "css/custom.css" | resources.Minify }}
 
-{{/* ⚡ Без fonts.css і FontAwesome (тільки системні шрифти й SVG-іконки) */}}
-{{ $stylesheet := slice $stylesheetNormalize $stylesheetGeneric $stylesheetScreen $stylesheetCustom | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
+{{ $stylesheet := slice $stylesheetNormalize $stylesheetGeneric $stylesheetScreen $theme $stylesheetCustom | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
 
 <link rel="preload" href="{{ $stylesheet.RelPermalink }}" as="style">
 <link rel="stylesheet" href="{{ $stylesheet.RelPermalink }}" type="text/css" integrity="{{ $stylesheet.Data.Integrity }}" />
@@ -38,8 +41,18 @@
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/schema.html" . }}
 
-<!-- A partial to be overwritten by the user.
-     Simply place a custom_head.html into
-     your local /layouts/partials-directory -->
-{{- partial "custom_head.html" . -}}
+{{/* === Favicons === */}}
+{{ with resources.Get "images/apple-touch-icon.png" }}
+<link rel="apple-touch-icon" sizes="180x180" href="{{ .RelPermalink }}" />
+{{ end }}
+{{ with resources.Get "images/favicon.svg" }}
+<link rel="icon" type="image/svg+xml" href="{{ .RelPermalink }}" />
+{{ end }}
+{{ range seq 9 4 }}
+  {{ $size := pow 2 . }}
+  {{ $file := replace "images/favicon-##x##.png" "##" $size }}
+  {{ with resources.Get $file }}
+  <link rel="icon" type="{{ .MediaType.Type }}" sizes="{{ $size }}x{{ $size }}" href="{{ .RelPermalink }}" />
+  {{ end }}
+{{ end }}
 
