@@ -47,3 +47,6 @@
 {{ $style := resources.Get $theme | css.Sass | resources.Minify }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
+{{ $custom := resources.Get "css/custom.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
+

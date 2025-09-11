@@ -6,13 +6,13 @@
   <div class="inner">
     {{ if ne .Site.Params.footer.showFooterLinks false }}
     <section class="links">
-      <ol>
-      {{ range where $sections ".Params.footer_menu" "eq" true }}
-        <li>
-          <a href="{{ relLangURL .Params.detailed_page_path }}">{{ .Params.footer_menu_title }}</a>
-        </li>
-      {{ end }}
-      </ol>
+      <nav class="footer-nav">
+        {{ range where $sections ".Params.footer_menu" "eq" true }}
+          <a class="footer-link" href="{{ relLangURL .Params.detailed_page_path }}">
+            {{ .Params.footer_menu_title }}
+          </a>
+        {{ end }}
+      </nav>
     </section>
     <hr />
     {{ end }}
@@ -38,3 +38,4 @@
     {{ end }}
   </div>
 </footer>
+
