@@ -86,7 +86,7 @@ enableEmoji = true
 
     [[params.contacts]]
         label = "phone"
-        value = "+41 79 615 42 18"
+        value = "+41 44 442 44 22"
         url = "tel:+41796154218"
         icon = "fa fa-phone"
 
